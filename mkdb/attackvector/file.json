@@ -1,0 +1,17 @@
+[
+    {
+        "vector_name":"Hosts",
+        "vector_cn_name":"修改Hosts文件",
+        "file_full_path":"C:\\Windows\\System32\\drivers\\etc\\hosts",
+        "file_content":"127.0.0.1 www.baidu.com",
+        "opt_type":"write_append"
+    },
+    
+    {
+        "vector_name":"MalDesktopLNK",
+        "vector_cn_name":"恶意创建桌面快捷方式",
+        "file_full_path":"%Desktop%\\爱淘宝.url",
+        "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
+        "opt_type":"create"
+    }
+]

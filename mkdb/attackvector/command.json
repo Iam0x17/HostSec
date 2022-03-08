@@ -1,0 +1,9 @@
+[
+    {
+        "vector_name":"CmdAddNetUser",
+        "vector_cn_name":"命令行添加用户账户",
+        "command":"net1 user test test /add"
+    }
+    
+
+]
