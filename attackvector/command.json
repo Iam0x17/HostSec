@@ -15,6 +15,12 @@
         "vector_name":"HiddenExecPowershell",
         "vector_cn_name":"隐藏执行powershell",
         "command":"powershell -windowstyle hidden"
+    },
+
+    {
+        "vector_name":"WmiExecProc",
+        "vector_cn_name":"通过WMIC启动可疑进程",
+        "command":"wmic process call create calc"
     }
 
 
