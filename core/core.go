@@ -118,10 +118,21 @@ func AttackSingle(vectorname, attacktype string) {
 }
 
 func GetAttackType(vectorname string) string {
-	return "file"
+	vectorListDB := models.VectorListDB{}
+	models.DB.Where("vector_name=?", vectorname).Find(&vectorListDB)
+	return vectorListDB.Type
+}
+
+func Load() {
+	util.IsElevated()
+	//if util.GetLogSign() {
+	//	util.CreateLogFile()
+	//}
 }
 
 func Unload() {
 	models.DB.Close()
-	util.WriteLogResult()
+	if util.GetLogSign() {
+		util.WriteLogResult()
+	}
 }

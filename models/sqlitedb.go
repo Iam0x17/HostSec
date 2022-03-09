@@ -5,7 +5,6 @@ import (
 	"github.com/InVisionApp/tabular"
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
-	"reflect"
 )
 
 var tab tabular.Table
@@ -23,16 +22,20 @@ func ShowVectorList() {
 
 	tab = tabular.New()
 	tab.Col("v", "攻击向量", 30)
-	tab.Col("d", "描述", 30)
+	tab.Col("d", "描述", 25)
 
 	//table := [][]string{}
 	vectorListDB := []VectorListDB{}
 	DB.Find(&vectorListDB)
-	fmt.Println(reflect.TypeOf(vectorListDB))
+	//fmt.Println(reflect.TypeOf(vectorListDB))
 
 	format := tab.Print("v", "d")
 	for _, v := range vectorListDB {
 		fmt.Printf(format, v.VectorName, v.VectorCnName)
 	}
+}
 
+func FindSingleVector(vectorname string, structdb interface{}) interface{} {
+	DB.Where("vector_name=?", vectorname).Find(structdb)
+	return structdb
 }

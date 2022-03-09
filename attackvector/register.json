@@ -49,6 +49,7 @@
         "opt_type":"edit"
     },
 
+
     {
         "vector_name":"HiddenFile",
         "vector_cn_name":"隐藏文件配置项",

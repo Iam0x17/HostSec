@@ -3,7 +3,19 @@
         "vector_name":"CmdAddNetUser",
         "vector_cn_name":"命令行添加用户账户",
         "command":"net1 user test test /add"
+    },
+
+    {
+        "vector_name":"DelShadows",
+        "vector_cn_name":"删除卷影还原点",
+        "command":"vssadmin delete shadows /all /quiet"
+    },
+
+    {
+        "vector_name":"HiddenExecPowershell",
+        "vector_cn_name":"隐藏执行powershell",
+        "command":"powershell -windowstyle hidden"
     }
-    
+
 
 ]

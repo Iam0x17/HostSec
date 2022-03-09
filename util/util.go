@@ -18,9 +18,7 @@ import (
 
 func IsElevated() {
 	isAdmin := C.IsElevated()
-	if isAdmin != 0 {
-		fmt.Println("管理员权限")
-	} else {
+	if isAdmin != 1 {
 		fmt.Println("非管理员权限，请使用管理员权限，否则可能造成某些测试项不生效")
 	}
 }
@@ -42,7 +40,10 @@ func PrintAttackResult(res int, vectorcnname string) {
 		break
 	}
 	ColorPrint(res, describe)
-	writeLog(describe)
+	if GetLogSign() {
+		writeLog(describe)
+	}
+
 }
 
 func GetRealPath(path string) string {

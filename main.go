@@ -3,12 +3,11 @@ package main
 import (
 	"HostSec/core"
 	"HostSec/core/cmd"
-	"HostSec/util"
 )
 
 func main() {
+	core.Load()
 	cmd.Execute()
-	util.IsElevated()
 	//vectorName := "MalDesktopLNK"
 	//attackType := "file"
 	//core.AttackSingle(vectorName, attackType)

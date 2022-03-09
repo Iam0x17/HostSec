@@ -5,13 +5,11 @@ import (
 	"os"
 )
 
-var vectorName string
-
 var rootCmd = &cobra.Command{
 	Use: "HostSec",
 
 	//Run: func(cmd *cobra.Command, args []string) {
-	//	fmt.Println(args)
+	//	fmt.Println("输出-h查看用法")
 	//},
 }
 

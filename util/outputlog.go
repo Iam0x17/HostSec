@@ -14,10 +14,22 @@ type Result struct {
 }
 
 var gResult = new(Result)
-
 var gLogFileHandle *os.File
+var signLog = false
 
-func init() {
+func SetLogSign(sign bool) {
+	if sign {
+		fmt.Println("日志开启")
+		createLogFile()
+	}
+	signLog = sign
+}
+
+func GetLogSign() bool {
+	return signLog
+}
+
+func createLogFile() {
 	var err error
 	gLogFileHandle, err = os.OpenFile(getLogName(), os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
 	if err != nil {
