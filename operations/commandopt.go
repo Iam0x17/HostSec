@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"HostSecAssessment/util"
+	"HostSec/util"
 	"bufio"
 	"io"
 	"os/exec"

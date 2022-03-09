@@ -1,9 +1,9 @@
 package main
 
 import (
-	"HostSecAssessment/core"
-	"HostSecAssessment/core/cmd"
-	"HostSecAssessment/util"
+	"HostSec/core"
+	"HostSec/core/cmd"
+	"HostSec/util"
 )
 
 func main() {
@@ -13,7 +13,6 @@ func main() {
 	//attackType := "file"
 	//core.AttackSingle(vectorName, attackType)
 	//core.AttackMulti()
-
 	//AddData()
 	core.Unload()
 	//models.CreateDB()

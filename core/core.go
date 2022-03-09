@@ -1,9 +1,9 @@
 package core
 
 import (
-	"HostSecAssessment/models"
-	"HostSecAssessment/operations"
-	"HostSecAssessment/util"
+	"HostSec/models"
+	"HostSec/operations"
+	"HostSec/util"
 	"sync"
 )
 

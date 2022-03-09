@@ -1,8 +1,9 @@
-module HostSecAssessment
+module HostSec
 
 go 1.17
 
 require (
+	github.com/InVisionApp/tabular v0.3.0
 	github.com/fatih/color v1.13.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/mattn/go-sqlite3 v1.14.12

@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"HostSecAssessment/util"
+	"HostSec/util"
 	registry "golang.org/x/sys/windows/registry"
 )
 

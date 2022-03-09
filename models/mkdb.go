@@ -1,27 +1,14 @@
 package models
 
 import (
+	"HostSec/util"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"mkdb/util"
 	"os"
 	"sync"
-
-	"github.com/jinzhu/gorm"
-	_ "github.com/mattn/go-sqlite3"
 )
-
-var DB *gorm.DB
-
-func init() {
-	var err error
-	DB, err = gorm.Open("sqlite3", "./attackvector.db")
-	if err != nil {
-		panic(err)
-	}
-}
 
 func CreateDB() {
 	//创建表
