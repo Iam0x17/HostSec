@@ -231,3 +231,10 @@ func WriteData2DB() {
 	}()
 	wg.Wait()
 }
+
+func WriteData2DBSingle() {
+	writeFileData2DB()
+	writeRegisterData2DB()
+	writeCommandData2DB()
+	writeVectorListData2DB()
+}

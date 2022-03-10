@@ -21,6 +21,7 @@ func init() {
 func ShowVectorList() {
 
 	tab = tabular.New()
+	tab.Col("o", "序号", 5)
 	tab.Col("v", "攻击向量", 30)
 	tab.Col("d", "描述", 25)
 
@@ -28,10 +29,11 @@ func ShowVectorList() {
 	vectorListDB := []VectorListDB{}
 	DB.Find(&vectorListDB)
 	//fmt.Println(reflect.TypeOf(vectorListDB))
-
-	format := tab.Print("v", "d")
+	nOrder := 1
+	format := tab.Print("o", "v", "d")
 	for _, v := range vectorListDB {
-		fmt.Printf(format, v.VectorName, v.VectorCnName)
+		fmt.Printf(format, nOrder, v.VectorName, v.VectorCnName)
+		nOrder++
 	}
 }
 

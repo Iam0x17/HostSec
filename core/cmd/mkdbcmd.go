@@ -14,7 +14,8 @@ var mkDBCmd = &cobra.Command{
 	Short: "compile json into db library",
 	Run: func(cmd *cobra.Command, args []string) {
 		models.CreateDB()
-		models.WriteData2DB()
+		//models.WriteData2DB()
+		models.WriteData2DBSingle()
 		defer models.DB.Close()
 	},
 }

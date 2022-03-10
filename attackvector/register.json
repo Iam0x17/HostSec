@@ -14,8 +14,8 @@
         "vector_cn_name":"启动项",
         "key_root":"HKEY_CURRENT_USER",
         "key_path":"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
-        "key_name":"v2rayN",
-        "key_value":"C:\\v2rayN-Core\\v2rayN2.exe",
+        "key_name":"cmd",
+        "key_value":"cmd.exe",
         "opt_type":"edit"
     },
 
@@ -49,7 +49,6 @@
         "opt_type":"edit"
     },
 
-
     {
         "vector_name":"HiddenFile",
         "vector_cn_name":"隐藏文件配置项",
@@ -57,6 +56,46 @@
         "key_path":"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
         "key_name":"Hidden",
         "key_value":"0",
+        "opt_type":"edit"
+    },
+
+    {
+        "vector_name":"ImageHijack",
+        "vector_cn_name":"映像劫持",
+        "key_root":"HKEY_LOCAL_MACHINE",
+        "key_path":"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\notepad.exe",
+        "key_name":"Debugger",
+        "key_value":"calc.exe",
+        "opt_type":"edit"
+    },
+
+    {
+        "vector_name":"OfficeTest",
+        "vector_cn_name":"Office Test加载",
+        "key_root":"HKEY_CURRENT_USER",
+        "key_path":"SOFTWARE\\MicrosoftOffice test\\Special\\Perf",
+        "key_name":"Debugger",
+        "key_value":"C:\\popmsg.dll",
+        "opt_type":"edit"
+    },
+
+    {
+        "vector_name":"FileRelevance",
+        "vector_cn_name":"修改文件关联项",
+        "key_root":"HKEY_LOCAL_MACHINE",
+        "key_path":"SOFTWARE\\Classes\\.exe",
+        "key_name":"",
+        "key_value":"txtfile",
+        "opt_type":"edit"
+    },
+
+    {
+        "vector_name":"AppInitDllAutoRun",
+        "vector_cn_name":"篡改AppInit_DLLs启动项",
+        "key_root":"HKEY_LOCAL_MACHINE",
+        "key_path":"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows",
+        "key_name":"Appinit_Dlls",
+        "key_value":"C:\\popmsg.dll",
         "opt_type":"edit"
     }
 

