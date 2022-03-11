@@ -65,7 +65,7 @@ func writeFileData2DB() {
 	DB.Exec("DELETE FROM filedb")
 	bytes, err := ioutil.ReadFile("./attackvector/file.json")
 	if err != nil {
-		fmt.Println("读取register.json文件失败", err)
+		fmt.Println("filedb.json文件失败", err)
 		return
 	}
 
