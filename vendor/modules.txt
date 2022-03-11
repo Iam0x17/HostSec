@@ -30,7 +30,6 @@ github.com/spf13/cobra
 github.com/spf13/pflag
 # github.com/theherk/winpath v0.0.0-20170224022200-6915bb6ff6f9
 ## explicit
-github.com/theherk/winpath
 # golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9
 ## explicit; go 1.17
 golang.org/x/sys/internal/unsafeheader

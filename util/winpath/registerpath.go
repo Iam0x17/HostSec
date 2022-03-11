@@ -43,3 +43,9 @@ func StartMenu() (string, error) {
 func Startup() (string, error) {
 	return GetVal(registry.CURRENT_USER, `Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders`, "Startup")
 }
+
+func Favorites() (string, error) {
+	return GetVal(registry.CURRENT_USER, `Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders`, "Favorites")
+}
+
+//

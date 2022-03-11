@@ -6,6 +6,12 @@
     },
 
     {
+        "vector_name":"CmdDelNetUser",
+        "vector_cn_name":"命令行删除用户账户",
+        "command":"net1 user test /del"
+    },
+
+    {
         "vector_name":"DelShadows",
         "vector_cn_name":"删除卷影还原点",
         "command":"vssadmin delete shadows /all /quiet"

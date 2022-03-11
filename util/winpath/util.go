@@ -1,15 +1,12 @@
 package winpath
 
 import (
+	"golang.org/x/sys/windows/registry"
 	"os"
 	"regexp"
 	"strings"
-
-	"golang.org/x/sys/windows/registry"
 )
 
-// GetRaw will get a value from a specified top-level key in the registry
-// given a path and value.
 func GetRaw(topKey registry.Key, path, value string) (string, error) {
 	k, err := registry.OpenKey(topKey, path, registry.QUERY_VALUE)
 	if err != nil {

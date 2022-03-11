@@ -13,5 +13,29 @@
         "file_full_path":"%Desktop%\\爱淘宝.url",
         "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
         "opt_type":"create"
+    },
+
+    {
+        "vector_name":"IEFavorites",
+        "vector_cn_name":"IE收藏夹",
+        "file_full_path":"%Favorites%\\爱淘宝.url",
+        "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
+        "opt_type":"create"
+    },
+
+    {
+        "vector_name":"SysDirSysFile",
+        "vector_cn_name":"系统目录创建系统同名文件",
+        "file_full_path":"C:\\Windows\\svchost.exe",
+        "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
+        "opt_type":"create"
+    },
+
+    {
+        "vector_name":"StartupDir",
+        "vector_cn_name":"启动目录",
+        "file_full_path":"%Startup%\\svchost.exe",
+        "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
+        "opt_type":"create"
     }
 ]

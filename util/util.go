@@ -6,9 +6,9 @@ package util
 */
 import "C"
 import (
+	"HostSec/util/winpath"
 	"bytes"
 	"fmt"
-	"github.com/theherk/winpath"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 	"io/ioutil"
@@ -46,22 +46,9 @@ func PrintAttackResult(res int, vectorcnname string) {
 
 }
 
+//根据环境变量获取真实路径
 func GetRealPath(path string) string {
-	sep := "%"
-	if strings.LastIndex(path, sep) == -1 {
-		return path
-	}
-	var envPath string
-	pathArray := strings.Split(path, sep)
-	switch pathArray[1] {
-	case "Desktop":
-		envPath, _ = winpath.Desktop()
-		break
-	default:
-		return path
-	}
-	realPath := envPath + pathArray[2]
-	return realPath
+	return winpath.GetWinPath(path)
 }
 
 func Gbk2Utf8Bytes(s []byte) ([]byte, error) {

@@ -81,7 +81,7 @@
 
     {
         "vector_name":"FileRelevance",
-        "vector_cn_name":"修改文件关联项",
+        "vector_cn_name":"文件关联项",
         "key_root":"HKEY_LOCAL_MACHINE",
         "key_path":"SOFTWARE\\Classes\\.exe",
         "key_name":"",
@@ -91,10 +91,20 @@
 
     {
         "vector_name":"AppInitDllAutoRun",
-        "vector_cn_name":"篡改AppInit_DLLs启动项",
+        "vector_cn_name":"AppInit_DLLs启动项",
         "key_root":"HKEY_LOCAL_MACHINE",
         "key_path":"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows",
         "key_name":"Appinit_Dlls",
+        "key_value":"C:\\popmsg.dll",
+        "opt_type":"edit"
+    },
+
+    {
+        "vector_name":"ServiceDll",
+        "vector_cn_name":"系统服务扩展项",
+        "key_root":"HKEY_LOCAL_MACHINE",
+        "key_path":"SYSTEM\\CurrentControlSet\\Services\\csrss\\Parameters",
+        "key_name":"ServiceDll",
         "key_value":"C:\\popmsg.dll",
         "opt_type":"edit"
     }
