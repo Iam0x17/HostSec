@@ -7,7 +7,7 @@ import (
 	"os/exec"
 )
 
-func CcommandOpt(vectorcnname, command string) {
+func CommandOpt(vectorcnname, command string) {
 	util.PrintAttackResult(execCommand(command), vectorcnname)
 }
 

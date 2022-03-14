@@ -54,7 +54,7 @@ func fileAttackMulti() {
 func commandAttackSingle(vectorname string) {
 	commandDB := models.CommandDB{}
 	models.DB.Where("vector_name=?", vectorname).Find(&commandDB)
-	operations.CcommandOpt(commandDB.VectorCnName, commandDB.Command)
+	operations.CommandOpt(commandDB.VectorCnName, commandDB.Command)
 }
 
 func commandAttackMulti() {
@@ -66,7 +66,7 @@ func commandAttackMulti() {
 		wg.Add(1)
 		//fmt.Println(v.VectorName)
 		go func(v models.CommandDB) {
-			operations.CcommandOpt(v.VectorCnName, v.Command)
+			operations.CommandOpt(v.VectorCnName, v.Command)
 			wg.Done()
 		}(v)
 	}

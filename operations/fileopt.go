@@ -52,19 +52,9 @@ func writeFile(filefullpath, filecontent, opttype string) int {
 		//fmt.Printf("write file err=%v\n", err)
 		return 0
 	}
+
 	return 1
-	//writer := bufio.NewWriter(file)
-	//_, err1 := writer.WriteString(filecontent)
-	//if err1 != nil {
-	//	log.Fatal(err1)
-	//}
-	////因为writer是带缓存，因此在调用WriterString方法时，其实
-	////内容是先写入到缓存的,所以需要调用Flush方法，将缓冲的数据
-	////真正写入到文件中， 否则文件中会没有数据!!!
-	//err2 := writer.Flush()
-	//if err2 != nil {
-	//	log.Fatal(err2)
-	//}
+
 }
 
 func delFile(filefullpath string) int {
