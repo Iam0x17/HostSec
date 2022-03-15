@@ -1,6 +1,7 @@
-package models
+package database
 
 import (
+	"HostSec/config"
 	"HostSec/util"
 	"encoding/json"
 	"fmt"
@@ -14,7 +15,6 @@ func CreateDB() {
 	//创建表
 	sql_registerdb_table := `
 	CREATE TABLE IF NOT EXISTS registerdb(
-	    id INTEGER PRIMARY KEY AUTOINCREMENT,
 	    vector_name VARCHAR(64) NULL,
 	    vector_cn_name VARCHAR(64) NULL,
 		key_root VARCHAR(64) NULL,
@@ -27,10 +27,9 @@ func CreateDB() {
 
 	sql_filedb_table := `
 	CREATE TABLE IF NOT EXISTS filedb(
-	    id INTEGER PRIMARY KEY AUTOINCREMENT,
 	    vector_name VARCHAR(64) NULL,
 	    vector_cn_name VARCHAR(64) NULL,
-	    file_full_path VARCHAR(64) NULL,
+	    file_path VARCHAR(64) NULL,
 		file_content VARCHAR(64) NULL,
 	    opt_type VARCHAR(64) NULL
 	);
@@ -38,7 +37,6 @@ func CreateDB() {
 
 	sql_commanddb_table := `
 	CREATE TABLE IF NOT EXISTS commanddb(
-	    id INTEGER PRIMARY KEY AUTOINCREMENT,
 	    vector_name VARCHAR(64) NULL,
 	    vector_cn_name VARCHAR(64) NULL,
 	    command VARCHAR(64) NULL
@@ -47,7 +45,6 @@ func CreateDB() {
 
 	sql_vectorlistdb_table := `
 	CREATE TABLE IF NOT EXISTS vectorlistdb(
-	    id INTEGER PRIMARY KEY AUTOINCREMENT,
 	    vector_name VARCHAR(64) NULL,
 	    vector_cn_name VARCHAR(64) NULL,
 	    type VARCHAR(64) NULL
@@ -63,7 +60,7 @@ func CreateDB() {
 
 func writeFileData2DB() {
 	DB.Exec("DELETE FROM filedb")
-	bytes, err := ioutil.ReadFile("./attackvector/file.json")
+	bytes, err := ioutil.ReadFile(config.HipsJsonDir + "/file.json")
 	if err != nil {
 		fmt.Println("filedb.json文件失败", err)
 		return
@@ -86,7 +83,7 @@ func writeFileData2DB() {
 
 func writeRegisterData2DB() {
 	DB.Exec("DELETE FROM registerdb")
-	bytes, err := ioutil.ReadFile("./attackvector/register.json")
+	bytes, err := ioutil.ReadFile(config.HipsJsonDir + "/register.json")
 	if err != nil {
 		fmt.Println("读取register.json文件失败", err)
 		return
@@ -109,7 +106,7 @@ func writeRegisterData2DB() {
 
 func writeCommandData2DB() {
 	DB.Exec("DELETE FROM commanddb")
-	bytes, err := ioutil.ReadFile("./attackvector/command.json")
+	bytes, err := ioutil.ReadFile(config.HipsJsonDir + "/command.json")
 	if err != nil {
 		fmt.Println("读取command.json文件失败", err)
 		return
@@ -198,13 +195,15 @@ func GetJsonData(filepath string) {
 			}
 		}
 		break
+	default:
+		break
 	}
 
 }
 
 func writeVectorListData2DB() {
 	DB.Exec("DELETE FROM vectorlistdb")
-	fileSlice := util.GetFileList("./attackvector")
+	fileSlice := util.GetFileList(config.HipsJsonDir)
 	for _, v := range fileSlice {
 		GetJsonData(v)
 	}

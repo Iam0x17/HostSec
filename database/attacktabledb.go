@@ -1,4 +1,4 @@
-package models
+package database
 
 type RegisterDB struct {
 	VectorName   string `json:"vector_name"`
@@ -19,7 +19,7 @@ type CommandDB struct {
 type FileDB struct {
 	VectorName   string `json:"vector_name"`
 	VectorCnName string `json:"vector_cn_name"`
-	FileFullPath string `json:"file_full_path"`
+	FilePath     string `json:"file_path"`
 	FileContent  string `json:"file_content"`
 	OptType      string `json:"opt_type"`
 }

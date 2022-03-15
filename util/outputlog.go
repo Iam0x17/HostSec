@@ -52,7 +52,6 @@ func writeLog(content string) {
 func WriteLogResult() {
 	var conent string
 	conent = "\r\n结果统计\r\n" + "防御成功:" + strconv.Itoa(gResult.Success) + " 防御失败:" + strconv.Itoa(gResult.Failed) + " 权限不足:" + strconv.Itoa(gResult.Denied)
-	//conent = "结果\r\n" + "防御成功:" + string(gResult.Success) + "防御失败:" + string(gResult.Failed) + "权限不足:" + string(gResult.Denied)
 	writeLog(conent)
 	gLogFileHandle.Close()
 }

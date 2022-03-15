@@ -1,28 +1,29 @@
-package core
+package control
 
 import (
-	"HostSec/models"
-	"HostSec/operations"
+	"HostSec/attackvector"
+	"HostSec/config"
+	"HostSec/database"
 	"HostSec/util"
 	"sync"
 )
 
 func regAttackSingle(vectorname string) {
-	registerDB := models.RegisterDB{}
-	models.DB.Where("vector_name=?", vectorname).Find(&registerDB)
-	operations.RegOpt(registerDB.VectorCnName, registerDB.KeyRoot, registerDB.KeyPath, registerDB.KeyName, registerDB.KeyValue, registerDB.OptType)
+	registerDB := database.RegisterDB{}
+	database.DB.Where("vector_name=?", vectorname).Find(&registerDB)
+	attackvector.RegOpt(registerDB.VectorCnName, registerDB.KeyRoot, registerDB.KeyPath, registerDB.KeyName, registerDB.KeyValue, registerDB.OptType)
 }
 
 func regAttackMulti() {
 	var wg sync.WaitGroup
-	registerDB := []models.RegisterDB{}
-	models.DB.Find(&registerDB)
+	registerDB := []database.RegisterDB{}
+	database.DB.Find(&registerDB)
 	//wg.Add(6)
 	for _, v := range registerDB {
 		wg.Add(1)
 		//fmt.Println(v.VectorName)
-		go func(v models.RegisterDB) {
-			operations.RegOpt(v.VectorCnName, v.KeyRoot, v.KeyPath, v.KeyName, v.KeyValue, v.OptType)
+		go func(v database.RegisterDB) {
+			attackvector.RegOpt(v.VectorCnName, v.KeyRoot, v.KeyPath, v.KeyName, v.KeyValue, v.OptType)
 			wg.Done()
 		}(v)
 	}
@@ -30,21 +31,21 @@ func regAttackMulti() {
 }
 
 func fileAttackSingle(vectorname string) {
-	fileDB := models.FileDB{}
-	models.DB.Where("vector_name=?", vectorname).Find(&fileDB)
-	operations.FileOpt(fileDB.VectorCnName, fileDB.FileFullPath, fileDB.FileContent, fileDB.OptType)
+	fileDB := database.FileDB{}
+	database.DB.Where("vector_name=?", vectorname).Find(&fileDB)
+	attackvector.FileOpt(fileDB.VectorCnName, fileDB.FilePath, fileDB.FileContent, fileDB.OptType)
 }
 
 func fileAttackMulti() {
 	var wg sync.WaitGroup
-	fileDB := []models.FileDB{}
-	models.DB.Find(&fileDB)
+	fileDB := []database.FileDB{}
+	database.DB.Find(&fileDB)
 	//wg.Add(6)
 	for _, v := range fileDB {
 		wg.Add(1)
 		//fmt.Println(v.VectorName)
-		go func(v models.FileDB) {
-			operations.FileOpt(v.VectorCnName, v.FileFullPath, v.FileContent, v.OptType)
+		go func(v database.FileDB) {
+			attackvector.FileOpt(v.VectorCnName, v.FilePath, v.FileContent, v.OptType)
 			wg.Done()
 		}(v)
 	}
@@ -52,21 +53,21 @@ func fileAttackMulti() {
 }
 
 func commandAttackSingle(vectorname string) {
-	commandDB := models.CommandDB{}
-	models.DB.Where("vector_name=?", vectorname).Find(&commandDB)
-	operations.CommandOpt(commandDB.VectorCnName, commandDB.Command)
+	commandDB := database.CommandDB{}
+	database.DB.Where("vector_name=?", vectorname).Find(&commandDB)
+	attackvector.CommandOpt(commandDB.VectorCnName, commandDB.Command)
 }
 
 func commandAttackMulti() {
 	var wg sync.WaitGroup
-	commandDB := []models.CommandDB{}
-	models.DB.Find(&commandDB)
+	commandDB := []database.CommandDB{}
+	database.DB.Find(&commandDB)
 	//wg.Add(6)
 	for _, v := range commandDB {
 		wg.Add(1)
 		//fmt.Println(v.VectorName)
-		go func(v models.CommandDB) {
-			operations.CommandOpt(v.VectorCnName, v.Command)
+		go func(v database.CommandDB) {
+			attackvector.CommandOpt(v.VectorCnName, v.Command)
 			wg.Done()
 		}(v)
 	}
@@ -83,6 +84,9 @@ func attackMultiType(attacktype string) {
 		break
 	case "command":
 		commandAttackMulti()
+		break
+	default:
+		break
 	}
 
 }
@@ -90,9 +94,8 @@ func attackMultiType(attacktype string) {
 func AttackMulti() {
 
 	var wg sync.WaitGroup
-	attack := []string{"register", "file", "command"}
 
-	for _, v := range attack {
+	for _, v := range config.AttackDB {
 		wg.Add(1)
 		//fmt.Println(v.VectorName)
 		go func(v string) {
@@ -114,12 +117,15 @@ func AttackSingle(vectorname, attacktype string) {
 		break
 	case "command":
 		commandAttackSingle(vectorname)
+		break
+	default:
+		break
 	}
 }
 
 func GetAttackType(vectorname string) string {
-	vectorListDB := models.VectorListDB{}
-	models.DB.Where("vector_name=?", vectorname).Find(&vectorListDB)
+	vectorListDB := database.VectorListDB{}
+	database.DB.Where("vector_name=?", vectorname).Find(&vectorListDB)
 	return vectorListDB.Type
 }
 
@@ -131,7 +137,7 @@ func Load() {
 }
 
 func Unload() {
-	models.DB.Close()
+	database.DB.Close()
 	if util.GetLogSign() {
 		util.WriteLogResult()
 	}

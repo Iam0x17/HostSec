@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"HostSec/models"
+	"HostSec/database"
 	"github.com/spf13/cobra"
 )
 
@@ -13,6 +13,6 @@ var vectorListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "show all attack vector list",
 	Run: func(cmd *cobra.Command, args []string) {
-		models.ShowVectorList()
+		database.ShowVectorList()
 	},
 }

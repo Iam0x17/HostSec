@@ -18,6 +18,8 @@ func ColorPrint(res int, describe string) {
 	case 2:
 		color = colorprint.FgYellow
 		break
+	default:
+		break
 	}
 	colorprint.Set(color)
 	fmt.Println(describe)

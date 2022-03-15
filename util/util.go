@@ -38,6 +38,8 @@ func PrintAttackResult(res int, vectorcnname string) {
 		describe = "[Denied]:" + vectorcnname + " 权限不足"
 		gResult.Denied++
 		break
+	default:
+		break
 	}
 	ColorPrint(res, describe)
 	if GetLogSign() {

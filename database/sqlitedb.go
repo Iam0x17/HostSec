@@ -1,6 +1,7 @@
-package models
+package database
 
 import (
+	"HostSec/config"
 	"fmt"
 	"github.com/InVisionApp/tabular"
 	"github.com/jinzhu/gorm"
@@ -12,7 +13,7 @@ var DB *gorm.DB
 
 func init() {
 	var err error
-	DB, err = gorm.Open("sqlite3", "./attackvector.db")
+	DB, err = gorm.Open("sqlite3", config.HipsDBName)
 	if err != nil {
 		panic(err)
 	}

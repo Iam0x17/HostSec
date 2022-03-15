@@ -1,20 +1,31 @@
-package operations
+package hips
 
 import (
-	"HostSec/util"
 	"bufio"
 	"io"
 	"os/exec"
 )
 
-func CommandOpt(vectorcnname, command string) {
-	util.PrintAttackResult(execCommand(command), vectorcnname)
+type CommandSrv interface {
+	ExecCommand() int
 }
 
-func execCommand(command string) int {
+type CommandData struct {
+	Command string
+}
+
+func NewCommandVector(command string) CommandSrv {
+	commandData := CommandData{
+		Command: command,
+	}
+
+	return commandData
+}
+
+func (command CommandData) ExecCommand() int {
 	var res = 0
 
-	cmd := exec.Command("cmd", "/c", command)
+	cmd := exec.Command("cmd", "/c", command.Command)
 	stderr, _ := cmd.StderrPipe()
 	stdout, _ := cmd.StdoutPipe()
 	if err := cmd.Start(); err != nil {

@@ -107,6 +107,26 @@
         "key_name":"ServiceDll",
         "key_value":"C:\\popmsg.dll",
         "opt_type":"edit"
+    },
+
+    {
+        "vector_name":"DisableAntiSpyware",
+        "vector_cn_name":"禁用Windows Defender",
+        "key_root":"HKEY_LOCAL_MACHINE",
+        "key_path":"SOFTWARE\\Policies\\Microsoft\\Windows Defender",
+        "key_name":"DisableAntiSpyware",
+        "key_value":"1",
+        "opt_type":"edit"
+    },
+
+    {
+        "vector_name":"DisableAntiVirus",
+        "vector_cn_name":"禁用Windows Defender",
+        "key_root":"HKEY_LOCAL_MACHINE",
+        "key_path":"SOFTWARE\\Policies\\Microsoft\\Windows Defender",
+        "key_name":"DisableAntiVirus",
+        "key_value":"1",
+        "opt_type":"edit"
     }
 
 ]

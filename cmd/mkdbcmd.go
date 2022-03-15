@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"HostSec/models"
+	"HostSec/database"
 	"github.com/spf13/cobra"
 )
 
@@ -13,9 +13,9 @@ var mkDBCmd = &cobra.Command{
 	Use:   "mkdb",
 	Short: "compile json into db library",
 	Run: func(cmd *cobra.Command, args []string) {
-		models.CreateDB()
+		database.CreateDB()
 		//models.WriteData2DB()
-		models.WriteData2DBSingle()
-		defer models.DB.Close()
+		database.WriteData2DBSingle()
+		defer database.DB.Close()
 	},
 }

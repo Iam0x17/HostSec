@@ -1,20 +1,12 @@
 package main
 
 import (
-	"HostSec/core"
-	"HostSec/core/cmd"
+	"HostSec/cmd"
+	"HostSec/control"
 )
 
 func main() {
-	core.Load()
+	control.Load()
 	cmd.Execute()
-	//vectorName := "MalDesktopLNK"
-	//attackType := "file"
-	//core.AttackSingle(vectorName, attackType)
-	//core.AttackMulti()
-	//AddData()
-	core.Unload()
-	//models.CreateDB()
-	//models.AddData()
-
+	control.Unload()
 }
