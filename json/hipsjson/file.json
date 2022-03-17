@@ -2,7 +2,7 @@
     {
         "vector_name":"Hosts",
         "vector_cn_name":"修改Hosts文件",
-        "file_full_path":"C:\\Windows\\System32\\drivers\\etc\\hosts",
+        "file_path":"C:\\Windows\\System32\\drivers\\etc\\hosts",
         "file_content":"127.0.0.1 www.baidu.com",
         "opt_type":"write_append"
     },
@@ -10,7 +10,7 @@
     {
         "vector_name":"MalDesktopLNK",
         "vector_cn_name":"恶意创建桌面快捷方式",
-        "file_full_path":"%Desktop%\\爱淘宝.url",
+        "file_path":"%Desktop%\\爱淘宝.url",
         "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
         "opt_type":"create"
     },
@@ -18,7 +18,7 @@
     {
         "vector_name":"IEFavorites",
         "vector_cn_name":"IE收藏夹",
-        "file_full_path":"%Favorites%\\爱淘宝.url",
+        "file_path":"%Favorites%\\爱淘宝.url",
         "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
         "opt_type":"create"
     },
@@ -26,7 +26,7 @@
     {
         "vector_name":"SysDirSysFile",
         "vector_cn_name":"系统目录创建系统同名文件",
-        "file_full_path":"C:\\Windows\\svchost.exe",
+        "file_path":"C:\\Windows\\svchost.exe",
         "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
         "opt_type":"create"
     },
@@ -34,7 +34,23 @@
     {
         "vector_name":"StartupDir",
         "vector_cn_name":"启动目录",
-        "file_full_path":"%Startup%\\svchost.exe",
+        "file_path":"%Startup%\\svchost.exe",
+        "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
+        "opt_type":"create"
+    },
+
+    {
+        "vector_name":"DesktopTaskBar",
+        "vector_cn_name":"桌面任务栏",
+        "file_path":"%AppData%\\Microsoft\\Internet Explorer\\Quick Launch\\爱淘宝.lnk",
+        "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
+        "opt_type":"create"
+    },
+
+    {
+        "vector_name":"SpecSysDir",
+        "vector_cn_name":"特殊系统目录",
+        "file_path":"C:\\Windows\\Fonts\\svchost.exe",
         "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
         "opt_type":"create"
     }

@@ -12,6 +12,9 @@ import (
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 	"io/ioutil"
+	"os"
+	"os/exec"
+	"path/filepath"
 	"strings"
 	"unsafe"
 )
@@ -91,4 +94,23 @@ func ExistWhoStr(str string, strsilce []string) (bool, string) {
 		}
 	}
 	return false, ""
+}
+
+func GetCurrentPath() string {
+	file, err := exec.LookPath(os.Args[0])
+	if err != nil {
+		return ""
+	}
+	path, err := filepath.Abs(file)
+	if err != nil {
+		return ""
+	}
+	i := strings.LastIndex(path, "/")
+	if i < 0 {
+		i = strings.LastIndex(path, "\\")
+	}
+	if i < 0 {
+		return ""
+	}
+	return string(path[0 : i+1])
 }

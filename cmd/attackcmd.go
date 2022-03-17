@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"HostSec/control"
-	"HostSec/database"
 	"HostSec/util"
 	"fmt"
 	"github.com/spf13/cobra"
@@ -33,7 +32,7 @@ var attackCmd = &cobra.Command{
 			attackType := control.GetAttackType(vectorName)
 			if attackType == "" {
 				fmt.Println("攻击向量输入有误，请输出正确的攻击向量")
-				database.ShowVectorList()
+				ShowVectorList()
 				os.Exit(1)
 			}
 			control.AttackSingle(vectorName, attackType)

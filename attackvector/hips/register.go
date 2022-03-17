@@ -18,7 +18,7 @@ type RegistryData struct {
 	KeyValue     string
 }
 
-func NewRegVector(vectorcnname, keyroot, keypath, keyname, keyvalue string) RegistrySrv {
+func NewRegistryVector(vectorcnname, keyroot, keypath, keyname, keyvalue string) RegistrySrv {
 	regData := RegistryData{
 		VectorCnName: vectorcnname,
 		KeyRoot:      getKeyRoot(keyroot),

@@ -1,17 +1,98 @@
 package control
 
 import (
-	"HostSec/attackvector"
 	"HostSec/config"
 	"HostSec/database"
+	"HostSec/operations/attack"
+	"HostSec/operations/backup"
+	"HostSec/operations/log"
+	"HostSec/operations/recovery"
 	"HostSec/util"
+	"fmt"
 	"sync"
 )
+
+var record = log.NewRecord()
+
+type zc log.RecordData
+
+func RecoveryEnv() {
+	recordData := []log.RecordData{}
+	database.RecoveryDB.Find(&recordData)
+
+	for _, v := range recordData {
+		RecoveryRecord(v)
+	}
+}
+
+func RecoveryRecord(recorddata log.RecordData) {
+	var res int
+	switch recorddata.AttackType {
+	case "file":
+		res = recovery.FileRecovery(recorddata.RawData, recorddata.BackupData, recorddata.RecoveryType)
+		break
+	default:
+		break
+	}
+
+	if res != 0 {
+		rSuccess := recorddata.VectorCnName + " 恢复成功"
+		fmt.Println(rSuccess)
+		database.RecoveryDB.Delete(&recorddata)
+	}
+}
+
+func AddRecordData2DB(vectorcnname, attacktype, rawdata, backupdata, optType string) {
+	rData := log.RecordData{
+		AttackType:   attacktype,
+		VectorCnName: vectorcnname,
+		RawData:      rawdata,
+		BackupData:   backupdata,
+		RecoveryType: recovery.GetRecoveryType(attacktype, optType),
+	}
+	database.RecoveryDB.Create(&rData)
+	record.Set(vectorcnname, &rData)
+}
+
+func AttackRecord(vectorcnname, attacktype string, dbtype interface{}) {
+	var resAttack int
+	var resBackup int
+	var dataBackup string
+	var optType string
+	var dataRaw string
+
+	switch attacktype {
+	case "register":
+		v := dbtype.(database.RegisterDB)
+		resAttack = attack.RegistryAttack(v.VectorCnName, v.KeyRoot, v.KeyPath, v.KeyName, v.KeyValue, v.OptType)
+		optType = v.OptType
+	case "file":
+		v := dbtype.(database.FileDB)
+		resBackup, dataBackup = backup.FileBackup(v.FilePath, v.FileContent, v.OptType)
+		if resBackup == 1 {
+			resAttack = attack.FileAttack(v.VectorCnName, v.FilePath, v.FileContent, v.OptType)
+		}
+		optType = v.OptType
+		dataRaw = v.FilePath
+		break
+	case "command":
+		v := dbtype.(database.CommandDB)
+		resAttack = attack.CommandAttack(v.VectorCnName, v.Command)
+		break
+	}
+
+	if resBackup != 0 && resAttack != 0 {
+		AddRecordData2DB(vectorcnname, attacktype, dataRaw, dataBackup, optType)
+	}
+
+	util.PrintAttackResult(resAttack, vectorcnname)
+}
 
 func regAttackSingle(vectorname string) {
 	registerDB := database.RegisterDB{}
 	database.DB.Where("vector_name=?", vectorname).Find(&registerDB)
-	attackvector.RegOpt(registerDB.VectorCnName, registerDB.KeyRoot, registerDB.KeyPath, registerDB.KeyName, registerDB.KeyValue, registerDB.OptType)
+	//attack.RegistryOpt(registerDB.VectorCnName, registerDB.KeyRoot, registerDB.KeyPath, registerDB.KeyName, registerDB.KeyValue, registerDB.OptType)
+	AttackRecord(registerDB.VectorCnName, "register", registerDB)
 }
 
 func regAttackMulti() {
@@ -23,7 +104,8 @@ func regAttackMulti() {
 		wg.Add(1)
 		//fmt.Println(v.VectorName)
 		go func(v database.RegisterDB) {
-			attackvector.RegOpt(v.VectorCnName, v.KeyRoot, v.KeyPath, v.KeyName, v.KeyValue, v.OptType)
+			//attack.RegistryOpt(v.VectorCnName, v.KeyRoot, v.KeyPath, v.KeyName, v.KeyValue, v.OptType)
+			AttackRecord(v.VectorCnName, "register", v)
 			wg.Done()
 		}(v)
 	}
@@ -33,7 +115,8 @@ func regAttackMulti() {
 func fileAttackSingle(vectorname string) {
 	fileDB := database.FileDB{}
 	database.DB.Where("vector_name=?", vectorname).Find(&fileDB)
-	attackvector.FileOpt(fileDB.VectorCnName, fileDB.FilePath, fileDB.FileContent, fileDB.OptType)
+	//attack.FileOpt(fileDB.VectorCnName, fileDB.FilePath, fileDB.FileContent, fileDB.OptType)
+	AttackRecord(fileDB.VectorCnName, "file", fileDB)
 }
 
 func fileAttackMulti() {
@@ -45,7 +128,8 @@ func fileAttackMulti() {
 		wg.Add(1)
 		//fmt.Println(v.VectorName)
 		go func(v database.FileDB) {
-			attackvector.FileOpt(v.VectorCnName, v.FilePath, v.FileContent, v.OptType)
+			//attack.FileOpt(v.VectorCnName, v.FilePath, v.FileContent, v.OptType)
+			AttackRecord(v.VectorCnName, "file", v)
 			wg.Done()
 		}(v)
 	}
@@ -55,7 +139,8 @@ func fileAttackMulti() {
 func commandAttackSingle(vectorname string) {
 	commandDB := database.CommandDB{}
 	database.DB.Where("vector_name=?", vectorname).Find(&commandDB)
-	attackvector.CommandOpt(commandDB.VectorCnName, commandDB.Command)
+	//attack.CommandOpt(commandDB.VectorCnName, commandDB.Command)
+	AttackRecord(commandDB.VectorCnName, "command", commandDB)
 }
 
 func commandAttackMulti() {
@@ -67,7 +152,8 @@ func commandAttackMulti() {
 		wg.Add(1)
 		//fmt.Println(v.VectorName)
 		go func(v database.CommandDB) {
-			attackvector.CommandOpt(v.VectorCnName, v.Command)
+			//attack.CommandOpt(v.VectorCnName, v.Command)
+			AttackRecord(v.VectorCnName, "command", v)
 			wg.Done()
 		}(v)
 	}

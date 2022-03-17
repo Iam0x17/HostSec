@@ -2,12 +2,16 @@ package hips
 
 import (
 	"HostSec/util"
+	"fmt"
+	"io"
 	"os"
 )
 
 type FileSrv interface {
 	WriteFile() int
 	DelFile() int
+	CopyFile(dstfilepath string) int
+	DelCopy(dstfilepath string) int
 }
 
 type FileData struct {
@@ -58,6 +62,68 @@ func (file FileData) WriteFile() int {
 func (file FileData) DelFile() int {
 	checkFileIsExist(file.FilePath)
 	err := os.Remove(file.FilePath)
+	if err != nil {
+		return 0
+	} else {
+		return 1
+	}
+}
+
+func (file FileData) CopyFile(dstfilepath string) int {
+
+	srcFile, errSrcFile := os.Open(file.FilePath)
+	if errSrcFile != nil {
+		fmt.Printf("open file err = %v\n", errSrcFile)
+		return 0
+	}
+
+	defer srcFile.Close()
+	//打开dstFileName
+	dstFile, errDstFile := os.OpenFile(dstfilepath, os.O_WRONLY|os.O_CREATE, 0755)
+	if errDstFile != nil {
+		fmt.Printf("open file err = %v\n", errDstFile)
+		return 0
+	}
+	defer dstFile.Close()
+	_, errCopy := io.Copy(dstFile, srcFile)
+	if errCopy != nil {
+		fmt.Printf("open file err = %v\n", errCopy)
+		return 0
+	}
+
+	return 1
+}
+
+func (file FileData) DelCopy(dstfilepath string) int {
+	if delFile(dstfilepath) != 1 {
+		return 0
+	}
+	srcFile, errSrcFile := os.Open(file.FilePath)
+	if errSrcFile != nil {
+		fmt.Printf("open file err = %v\n", errSrcFile)
+		return 0
+	}
+
+	defer srcFile.Close()
+	//打开dstFileName
+	dstFile, errDstFile := os.OpenFile(dstfilepath, os.O_WRONLY|os.O_CREATE, 0755)
+	if errDstFile != nil {
+		fmt.Printf("open file err = %v\n", errDstFile)
+		return 0
+	}
+	defer dstFile.Close()
+	_, errCopy := io.Copy(dstFile, srcFile)
+	if errCopy != nil {
+		fmt.Printf("open file err = %v\n", errCopy)
+		return 0
+	}
+
+	return 1
+}
+
+func delFile(filepath string) int {
+	//checkFileIsExist(file)
+	err := os.Remove(filepath)
 	if err != nil {
 		return 0
 	} else {

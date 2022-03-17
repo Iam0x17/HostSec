@@ -15,6 +15,8 @@ func GetWinPath(path string) string {
 		break
 	case "Favorites":
 		envPath, _ = Favorites()
+	case "AppData":
+		envPath, _ = CommonAppData()
 		break
 	default:
 		return path
