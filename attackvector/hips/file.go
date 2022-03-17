@@ -9,7 +9,7 @@ import (
 
 type FileSrv interface {
 	WriteFile() int
-	DelFile() int
+	DelFile(dstfilepath ...string) int
 	CopyFile(dstfilepath string) int
 	DelCopy(dstfilepath string) int
 }
@@ -22,7 +22,7 @@ type FileData struct {
 
 func NewFileVector(filepath, filecontent, opttype string) FileSrv {
 	fileData := FileData{
-		FilePath:    filepath,
+		FilePath:    util.GetRealPath(filepath),
 		FileContent: filecontent,
 		OptType:     opttype,
 	}
@@ -40,9 +40,9 @@ func (file FileData) WriteFile() int {
 		flag = os.O_WRONLY | os.O_APPEND
 		break
 	}
-	realPath := util.GetRealPath(file.FilePath)
+	//realPath := util.GetRealPath(file.FilePath)
 
-	hFile, err := os.OpenFile(realPath, flag, 0666)
+	hFile, err := os.OpenFile(file.FilePath, flag, 0666)
 	if err != nil {
 		//fmt.Printf("open file err=%v\n", err)
 		return 0
@@ -59,9 +59,17 @@ func (file FileData) WriteFile() int {
 
 }
 
-func (file FileData) DelFile() int {
-	checkFileIsExist(file.FilePath)
-	err := os.Remove(file.FilePath)
+func (file FileData) DelFile(dstfilepath ...string) int {
+	var err error
+	if len(dstfilepath) == 0 {
+		err = os.Remove(file.FilePath)
+	} else {
+		for _, v := range dstfilepath {
+			realPath := util.GetRealPath(v)
+			err = os.Remove(realPath)
+		}
+	}
+
 	if err != nil {
 		return 0
 	} else {
@@ -95,7 +103,9 @@ func (file FileData) CopyFile(dstfilepath string) int {
 }
 
 func (file FileData) DelCopy(dstfilepath string) int {
-	if delFile(dstfilepath) != 1 {
+	realPath := util.GetRealPath(dstfilepath)
+	err := os.Remove(realPath)
+	if err != nil {
 		return 0
 	}
 	srcFile, errSrcFile := os.Open(file.FilePath)

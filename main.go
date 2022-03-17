@@ -2,11 +2,11 @@ package main
 
 import (
 	"HostSec/cmd"
-	"HostSec/control"
+	"HostSec/controller"
 )
 
 func main() {
-	control.Load()
+	controller.Load()
 	cmd.Execute()
-	control.Unload()
+	controller.Unload()
 }

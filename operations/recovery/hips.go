@@ -31,8 +31,10 @@ func FileRecovery(rawpath, backuppath, recoverytype string) int {
 		}
 		break
 	case "del":
-		res = file.DelFile()
+		res = file.DelFile(rawpath)
 		break
+	case "copy":
+		res = file.CopyFile(rawpath)
 	}
 	//util.PrintAttackResult(res, vectorcnname)
 	return res

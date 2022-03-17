@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"HostSec/control"
+	"HostSec/controller"
 	"HostSec/util"
 	"fmt"
 	"github.com/spf13/cobra"
@@ -27,15 +27,15 @@ var attackCmd = &cobra.Command{
 		//fmt.Println("logpath " + attackLog)
 		util.SetLogSign(signLog)
 		if vectorName == "" {
-			control.AttackMulti()
+			controller.AttackMulti()
 		} else {
-			attackType := control.GetAttackType(vectorName)
+			attackType := controller.GetAttackType(vectorName)
 			if attackType == "" {
 				fmt.Println("攻击向量输入有误，请输出正确的攻击向量")
 				ShowVectorList()
 				os.Exit(1)
 			}
-			control.AttackSingle(vectorName, attackType)
+			controller.AttackSingle(vectorName, attackType)
 		}
 	},
 	//Args: cobra.MinimumNArgs(1),
