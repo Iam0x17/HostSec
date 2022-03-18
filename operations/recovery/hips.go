@@ -3,6 +3,7 @@ package recovery
 import (
 	"HostSec/attackvector/hips"
 	"HostSec/config"
+	"strings"
 )
 
 func GetRecoveryType(attacktype, opttype string) string {
@@ -16,6 +17,12 @@ func GetRecoveryType(attacktype, opttype string) string {
 			return "copy"
 		}
 		break
+	case config.HipsReg:
+		if opttype == "edit" {
+			return "edit"
+		} else {
+			return "add"
+		}
 	}
 	return ""
 }
@@ -36,6 +43,31 @@ func FileRecovery(rawpath, backuppath, recoverytype string) int {
 	case "copy":
 		res = file.CopyFile(rawpath)
 	}
+	//util.PrintAttackResult(res, vectorcnname)
+	return res
+}
+
+func RegRecovery(rawreg, backupreg string) int {
+	var res int
+	rawData := strings.Split(rawreg, "|")
+	backupData := strings.Split(backupreg, "|")
+	reg := hips.NewRegistryVector(rawData[0], rawData[1], rawData[2], rawData[3])
+
+	switch backupData[0] {
+	case "keyValue":
+		res = reg.RegWriteStringValue(backupData[1])
+		break
+	case "NoKeyPath":
+		res = hips.RegDeleteMulKey(rawData[0], rawData[1])
+		break
+	case "NoKeyName":
+		res = reg.RegDeleteKeyValue()
+		break
+	case "NokeyValue":
+		res = reg.RegWriteStringValue("")
+		break
+	}
+
 	//util.PrintAttackResult(res, vectorcnname)
 	return res
 }

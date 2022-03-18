@@ -4,9 +4,9 @@ import (
 	"HostSec/attackvector/hips"
 )
 
-func RegistryAttack(vectorcnname, keyroot, keypath, keyname, keyvalue, opttype string) int {
+func RegistryAttack(keyroot, keypath, keyname, keyvalue, opttype string) int {
 	var res int
-	reg := hips.NewRegistryVector(vectorcnname, keyroot, keypath, keyname, keyvalue)
+	reg := hips.NewRegistryVector(keyroot, keypath, keyname, keyvalue)
 	switch opttype {
 	case "edit":
 		res = reg.RegWriteStringValue()
@@ -19,14 +19,14 @@ func RegistryAttack(vectorcnname, keyroot, keypath, keyname, keyvalue, opttype s
 	return res
 }
 
-func CommandAttack(vectorcnname, command string) int {
+func CommandAttack(command string) int {
 	cmd := hips.NewCommandVector(command)
 	res := cmd.ExecCommand()
 	//util.PrintAttackResult(res, vectorcnname)
 	return res
 }
 
-func FileAttack(vectorcnname, filepath, filecontent, opttype string) int {
+func FileAttack(filepath, filecontent, opttype string) int {
 	var res int
 	file := hips.NewFileVector(filepath, filecontent, opttype)
 	switch opttype {

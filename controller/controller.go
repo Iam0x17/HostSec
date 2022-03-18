@@ -28,6 +28,9 @@ func RecoveryEnv() {
 func RecoveryRecord(recorddata log.RecordData) {
 	var res int
 	switch recorddata.AttackType {
+	case "register":
+		res = recovery.RegRecovery(recorddata.RawData, recorddata.BackupData)
+		break
 	case "file":
 		res = recovery.FileRecovery(recorddata.RawData, recorddata.BackupData, recorddata.RecoveryType)
 		break
@@ -51,7 +54,7 @@ func AddRecordData2DB(vectorcnname, attacktype, rawdata, backupdata, optType str
 		RecoveryType: recovery.GetRecoveryType(attacktype, optType),
 	}
 	database.RecoveryDB.Create(&rData)
-	record.Set(vectorcnname, &rData)
+	//record.Set(vectorcnname, &rData)
 }
 
 func AttackRecord(vectorcnname, attacktype string, dbtype interface{}) {
@@ -64,20 +67,24 @@ func AttackRecord(vectorcnname, attacktype string, dbtype interface{}) {
 	switch attacktype {
 	case "register":
 		v := dbtype.(database.RegisterDB)
-		resAttack = attack.RegistryAttack(v.VectorCnName, v.KeyRoot, v.KeyPath, v.KeyName, v.KeyValue, v.OptType)
+		resBackup, dataBackup = backup.RegBackup(v.KeyRoot, v.KeyPath, v.KeyName, v.KeyValue)
+		if resBackup == 1 {
+			resAttack = attack.RegistryAttack(v.KeyRoot, v.KeyPath, v.KeyName, v.KeyValue, v.OptType)
+		}
 		optType = v.OptType
+		dataRaw = v.KeyRoot + "|" + v.KeyPath + "|" + v.KeyName + "|" + v.KeyValue
 	case "file":
 		v := dbtype.(database.FileDB)
 		resBackup, dataBackup = backup.FileBackup(v.FilePath, v.FileContent, v.OptType)
 		if resBackup == 1 {
-			resAttack = attack.FileAttack(v.VectorCnName, v.FilePath, v.FileContent, v.OptType)
+			resAttack = attack.FileAttack(v.FilePath, v.FileContent, v.OptType)
 		}
 		optType = v.OptType
 		dataRaw = v.FilePath
 		break
 	case "command":
 		v := dbtype.(database.CommandDB)
-		resAttack = attack.CommandAttack(v.VectorCnName, v.Command)
+		resAttack = attack.CommandAttack(v.Command)
 		break
 	}
 
