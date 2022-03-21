@@ -34,6 +34,8 @@ func RecoveryRecord(recorddata log.RecordData) {
 	case "file":
 		res = recovery.FileRecovery(recorddata.RawData, recorddata.BackupData, recorddata.RecoveryType)
 		break
+	case "command":
+		res = recovery.CmdRecovery(recorddata.BackupData)
 	default:
 		break
 	}
@@ -84,7 +86,11 @@ func AttackRecord(vectorcnname, attacktype string, dbtype interface{}) {
 		break
 	case "command":
 		v := dbtype.(database.CommandDB)
+		resBackup = v.Backup
 		resAttack = attack.CommandAttack(v.Command)
+		if resBackup != 0 {
+			dataBackup = v.Recovery
+		}
 		break
 	}
 

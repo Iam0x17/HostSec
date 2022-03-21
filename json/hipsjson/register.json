@@ -127,6 +127,16 @@
         "key_name":"DisableAntiVirus",
         "key_value":"1",
         "opt_type":"edit"
+    },
+
+    {
+        "vector_name":"DisableUAC",
+        "vector_cn_name":"关闭UAC弹窗",
+        "key_root":"HKEY_LOCAL_MACHINE",
+        "key_path":"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "key_name":"ConsentPromptBehaviorAdmin",
+        "key_value":"0",
+        "opt_type":"edit"
     }
 
 ]

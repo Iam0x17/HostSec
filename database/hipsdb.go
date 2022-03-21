@@ -14,6 +14,8 @@ type CommandDB struct {
 	VectorName   string `json:"vector_name"`
 	VectorCnName string `json:"vector_cn_name"`
 	Command      string `json:"command"`
+	Backup       int    `json:"backup"`
+	Recovery     string `json:"recovery"`
 }
 
 type FileDB struct {

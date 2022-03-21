@@ -53,5 +53,13 @@
         "file_path":"C:\\Windows\\Fonts\\svchost.exe",
         "file_content":"[InternetShortcut]\r\nURL=https://www.taobao.com/",
         "opt_type":"create"
+    },
+
+    {
+        "vector_name":"AutoRunInf",
+        "vector_cn_name":"AutoRun配置文件",
+        "file_path":"C:\\Autorun.inf",
+        "file_content":"[autorun]\r\nopen=calc.exe",
+        "opt_type":"create"
     }
 ]

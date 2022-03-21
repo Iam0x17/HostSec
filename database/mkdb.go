@@ -39,7 +39,9 @@ func CreateDB() {
 	CREATE TABLE IF NOT EXISTS commanddb(
 	    vector_name VARCHAR(64) NULL,
 	    vector_cn_name VARCHAR(64) NULL,
-	    command VARCHAR(64) NULL
+	    command VARCHAR(64) NULL,
+		backup  INTEGER NULL,
+		recovery VARCHAR(64) NULL
 	);
 	`
 

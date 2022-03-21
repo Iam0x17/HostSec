@@ -71,3 +71,10 @@ func RegRecovery(rawreg, backupreg string) int {
 	//util.PrintAttackResult(res, vectorcnname)
 	return res
 }
+
+func CmdRecovery(backupcmd string) int {
+	cmd := hips.NewCommandVector(backupcmd)
+	res := cmd.ExecCommand()
+	//util.PrintAttackResult(res, vectorcnname)
+	return res
+}

