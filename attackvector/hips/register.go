@@ -57,10 +57,11 @@ func (reg RegistryData) GetKeyValue() (int, string) {
 	defer k.Close()
 	value, _, errGetValue := k.GetStringValue(reg.KeyName)
 	if errGetValue != nil {
-		if int(errGetValue.(syscall.Errno)) == 2 {
-			return 0, ""
-		}
-		return -1, ""
+		//if int(errGetValue.(syscall.Errno)) == 2 {
+		//	return 0, ""
+		//}
+		//return -1, ""
+		return 0, ""
 	}
 	return 1, value
 }

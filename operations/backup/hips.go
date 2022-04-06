@@ -34,7 +34,7 @@ func FileBackup(filepath, filecontent, opttype string) (int, string) {
 
 func GetDstFile(path string) string {
 	str := strings.Split(path, `\`)
-	dstFilePath := `D:\HostSec\backup\` + str[len(str)-1]
+	dstFilePath := "./backup/" + str[len(str)-1]
 	return dstFilePath
 }
 

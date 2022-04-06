@@ -5,7 +5,7 @@
         "key_root":"HKEY_CURRENT_USER",
         "key_path":"SOFTWARE\\Microsoft\\Internet Explorer\\Main",
         "key_name":"Start Page",
-        "key_value":"www.baidu.com",
+        "key_value":"www.taobao.com",
         "opt_type":"edit"
     },
     
@@ -14,8 +14,8 @@
         "vector_cn_name":"启动项",
         "key_root":"HKEY_CURRENT_USER",
         "key_path":"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
-        "key_name":"cmd",
-        "key_value":"cmd.exe",
+        "key_name":"222",
+        "key_value":"D:\\2.exe",
         "opt_type":"edit"
     },
 
